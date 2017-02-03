@@ -1,0 +1,19 @@
+{
+  "name": "functional-helpers",
+  "version": "1.0.0",
+  "description": "Pure functions for use with e.g. Ramda",
+  "main": "index.js",
+  "repository": "https://github.com/aevy/functional-helpers",
+  "author": "Anton Strömkvist <hi@ahst.ro>",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha test.js"
+  },
+  "dependencies": {
+    "ramda": "^0.23.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  }
+}
