@@ -1,0 +1,6 @@
+node_modules/
+src/
+.gitignore
+.babelrc
+yarn.lock
+test.js

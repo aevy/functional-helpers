@@ -2,17 +2,21 @@
   "name": "functional-helpers",
   "version": "1.0.2",
   "description": "Pure functions for use with e.g. Ramda",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/aevy/functional-helpers",
   "author": "Anton Strömkvist <hi@ahst.ro>",
   "license": "MIT",
   "scripts": {
+    "prepublish": "npm run build",
+    "build": "babel src -d dist",
     "test": "mocha test.js"
   },
   "dependencies": {
     "ramda": "^0.23.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-preset-env": "^1.1.8",
     "chai": "^3.5.0",
     "mocha": "^3.2.0"
   }
