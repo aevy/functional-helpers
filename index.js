@@ -1,26 +1,30 @@
-const R = require("ramda")
+var R = require("ramda")
 
-const renameKeys = R.curry((keysMap, obj) =>
-  R.reduce(
-    (acc, key) => R.assoc(keysMap[key] || key, obj[key], acc),
+var renameKeys = R.curry(function (keysMap, obj) {
+  return R.reduce(
+    function (acc, key) {
+      return R.assoc(keysMap[key] || key, obj[key], acc)
+    },
     {},
     R.keys(obj)
   )
-)
+})
 
-const pickDeep = R.curry((paths, obj) => (
-  R.pipe(
+var pickDeep = R.curry(function (paths, obj) {
+  return R.pipe(
     R.map(
       R.pipe(
         R.split("."),
-        pathArr => ({ [R.last(pathArr)]: R.path(pathArr, obj) })
+        function (pathArr) {
+          return { [R.last(pathArr)]: R.path(pathArr, obj) }
+        }
       )
     ),
     R.mergeAll
   )(paths)
-))
+})
 
-const compactObj = R.pickBy(Boolean)
+var compactObj = R.pickBy(Boolean)
 
 module.exports = {
   compactObj,
