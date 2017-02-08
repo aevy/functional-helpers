@@ -1,7 +1,9 @@
+const R = require("ramda")
 const { expect } = require("chai")
 const {
   compactObj,
   renameKeys,
+  evolveAll,
   pickDeep,
 } = require("./")
 
@@ -83,4 +85,59 @@ describe("functional helpers", () => {
       expect(compactObj(truthyProps)).to.deep.equal(truthyProps)
     })
   })
+
+  describe("evolveAll", () => {
+    it("works as R.evolve if all transformations exist on object", () => {
+      const source = {
+        firstName: "  Tomato ",
+        id: 123,
+      }
+      const transformations = {
+        firstName: R.trim,
+        id: R.inc,
+      }
+      const result = {
+        firstName: "Tomato",
+        id: 124,
+      }
+      expect(evolveAll(transformations, source)).to.deep.equal(result)
+    })
+
+    it("runs transformation with `undefined` if it doesn't exist on object", () => {
+      const source = {
+        firstName: "  Tomato ",
+        id: 123,
+      }
+      const transformations = {
+        firstName: R.trim,
+        lastName: R.identity,
+        id: R.inc,
+      }
+      const result = {
+        firstName: "Tomato",
+        lastName: undefined,
+        id: 124,
+      }
+      expect(evolveAll(transformations, source)).to.deep.equal(result)
+    })
+
+    it("carries over key/values if key doesn't exist on transformations", () => {
+      const source = {
+        firstName: "  Tomato ",
+        id: 123,
+      }
+      const transformations = {
+        firstName: R.trim,
+        lastName: R.identity,
+      }
+      const result = {
+        firstName: "Tomato",
+        lastName: undefined,
+        id: 123,
+      }
+      expect(evolveAll(transformations, source)).to.deep.equal(result)
+    })
+
+  })
+
 })
