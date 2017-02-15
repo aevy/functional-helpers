@@ -5,6 +5,7 @@ const {
   renameKeys,
   evolveAll,
   pickDeep,
+  pickTree,
 } = require("./")
 
 describe("functional helpers", () => {
@@ -59,6 +60,85 @@ describe("functional helpers", () => {
       })
     })
 
+  })
+
+  describe("pickTree", () => {
+    it("returns an empty object if input object doesn't have any keys", () => {
+      expect(pickTree({}, {})).to.deep.equal({})
+      expect(pickTree({}, { foo: 1 })).to.deep.equal({})
+      expect(pickTree({}, { foo: { foo: 1, bar: "foo" } })).to.deep.equal({})
+    })
+
+    it("returns a shallow copy with all keys that exists on input, if they exist on source", () => {
+      expect(pickTree({ foo: true }, {})).to.deep.equal({})
+      expect(pickTree({ foo: true }, { foo: 1 })).to.deep.equal({ foo: 1 })
+      expect(pickTree({ foo: true }, { foo: { foo: 1, bar: "foo" } }))
+        .to.deep.equal({ foo: { foo: 1, bar: "foo" } })
+      expect(pickTree({ bar: true }, { bar: "lel", foo: { foo: 1, bar: "foo" } }))
+        .to.deep.equal({ bar: "lel" })
+    })
+
+    it("handles an array on the input tree as R.pick does", () => {
+      expect(pickTree(
+        {
+          foo: ["foo", "bar"],
+        },
+        {
+          foo: {
+            foo: 1,
+            bar: "foo",
+            oob: null,
+            far: 123,
+          },
+        }
+      )).to.deep.equal(
+        {
+          foo: {
+            foo: 1,
+            bar: "foo",
+          },
+        }
+      )
+    })
+
+    it("picks deeply nested values", () => {
+      expect(pickTree(
+        {
+          foo: {
+            bar: {
+              oob: true,
+            },
+          },
+        },
+        {
+          foo: {
+            foo: 1,
+            bar: {
+              oob: "asdf",
+              far: 123,
+            },
+            oob: null,
+            far: 123,
+          },
+        }
+      )).to.deep.equal(
+        {
+          foo: {
+            bar: {
+              oob: "asdf",
+            },
+          },
+        }
+      )
+    })
+
+    it("works exactly like R.pick if passed just an array", () => {
+      expect(pickTree(["foo", "bar"], { foo: 1, bar: 2, oob: 3 })).to.deep.equal({ foo: 1, bar: 2 })
+    })
+
+    it("ignores keys on input with falsey values", () => {
+      expect(pickTree({ foo: false, bar: true }, { foo: 1, bar: 2, oob: 3 })).to.deep.equal({ bar: 2 })
+    })
   })
 
   describe("compactObj", () => {

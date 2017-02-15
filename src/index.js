@@ -20,6 +20,25 @@ export const pickDeep = R.curry((paths, obj) => (
   )(paths)
 ))
 
+export const pickTree = R.curry(function _pickTree(tree, src) {
+  if (Array.isArray(tree)) {
+    return R.pick(tree, src) // If Array, use Ramda's `pick`
+  }
+
+  const result = {}
+  for (let branch in tree) {
+    const srcNode = src[branch]
+    const treeNode = tree[branch]
+    if (srcNode === undefined || !treeNode) {
+      continue
+    }
+    result[branch] = treeNode instanceof Object
+      ? _pickTree(treeNode, srcNode) // If Object, recurse
+      : srcNode // If anything else, copy src value
+  }
+  return result
+})
+
 export const compactObj = R.pickBy(Boolean)
 
 /**
