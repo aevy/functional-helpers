@@ -6,6 +6,7 @@ const {
   evolveAll,
   pickDeep,
   pickTree,
+  mergeBy,
 } = require("./")
 
 describe("functional helpers", () => {
@@ -220,4 +221,16 @@ describe("functional helpers", () => {
 
   })
 
+  describe("mergeBy", () => {
+    it("takes two functions, applies each one to obj, and merges the resulting object", () => {
+      const obj = { foo: "bar", bar: { oob: "foo", far: "bar" } }
+      expect(mergeBy(R.identity, R.identity, obj)).to.deep.equal(obj)
+      expect(mergeBy(R.omit(["foo"]), R.omit(["bar"]), obj)).to.deep.equal(obj)
+      expect(mergeBy(R.omit(["bar"]), R.prop(["bar"]), obj))
+        .to.deep.equal({ foo: "bar", oob: "foo", far: "bar" })
+      expect(mergeBy(R.omit(["bar"]), R.always({ lel: "wat" }), obj))
+        .to.deep.equal({ foo: "bar", lel: "wat" })
+    })
+
+  })
 })

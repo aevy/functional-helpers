@@ -59,3 +59,5 @@ export const evolveAll = R.curry(function _evolveAll(transformations, object) {
   }
   return R.merge(object, result)
 })
+
+export const mergeBy = R.curry((one, two, obj) => R.merge(one(obj), two(obj)))
