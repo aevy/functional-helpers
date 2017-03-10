@@ -8,6 +8,7 @@ const {
   pickDeep,
   pickTree,
   mergeBy,
+  spread,
 } = require("./")
 
 describe("functional helpers", () => {
@@ -235,13 +236,18 @@ describe("functional helpers", () => {
 
   })
 
-  describe("flattenProp", () => {
+
+  describe("spread/flattenProp", () => {
     it("merges a prop object onto the parent object", () => {
+      expect(spread("bar", { foo: "bar", bar: { oob: "foo", far: "bar" } }))
+        .to.deep.equal({ foo: "bar", oob: "foo", far: "bar" })
       expect(flattenProp("bar", { foo: "bar", bar: { oob: "foo", far: "bar" } }))
         .to.deep.equal({ foo: "bar", oob: "foo", far: "bar" })
     })
 
     it("overwrites values on the parent object", () => {
+      expect(spread("bar", { foo: "bar", bar: { foo: "foo" } }))
+        .to.deep.equal({ foo: "foo" })
       expect(flattenProp("bar", { foo: "bar", bar: { foo: "foo" } }))
         .to.deep.equal({ foo: "foo" })
     })
