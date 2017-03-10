@@ -61,3 +61,9 @@ export const evolveAll = R.curry(function _evolveAll(transformations, object) {
 })
 
 export const mergeBy = R.curry((one, two, obj) => R.merge(one(obj), two(obj)))
+
+export const flattenProp = R.curry((prop, obj) => mergeBy(
+  R.omit([prop]),
+  R.propOr({}, prop),
+  obj
+))

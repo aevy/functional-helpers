@@ -1,6 +1,7 @@
 const R = require("ramda")
 const { expect } = require("chai")
 const {
+  flattenProp,
   compactObj,
   renameKeys,
   evolveAll,
@@ -232,5 +233,17 @@ describe("functional helpers", () => {
         .to.deep.equal({ foo: "bar", lel: "wat" })
     })
 
+  })
+
+  describe("flattenProp", () => {
+    it("merges a prop object onto the parent object", () => {
+      expect(flattenProp("bar", { foo: "bar", bar: { oob: "foo", far: "bar" } }))
+        .to.deep.equal({ foo: "bar", oob: "foo", far: "bar" })
+    })
+
+    it("overwrites values on the parent object", () => {
+      expect(flattenProp("bar", { foo: "bar", bar: { foo: "foo" } }))
+        .to.deep.equal({ foo: "foo" })
+    })
   })
 })
