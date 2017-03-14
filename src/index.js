@@ -65,3 +65,5 @@ export const mergeBy = R.curry((one, two, obj) => R.merge(one(obj), two(obj)))
 export const spread = R.converge(R.merge, [R.dissoc, R.propOr({})])
 
 export const flattenProp = spread
+
+export const nilOrEmpty = R.either(R.isNil, R.isEmpty)

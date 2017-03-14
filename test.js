@@ -4,6 +4,7 @@ const {
   flattenProp,
   compactObj,
   renameKeys,
+  nilOrEmpty,
   evolveAll,
   pickDeep,
   pickTree,
@@ -250,6 +251,18 @@ describe("functional helpers", () => {
         .to.deep.equal({ foo: "foo" })
       expect(flattenProp("bar", { foo: "bar", bar: { foo: "foo" } }))
         .to.deep.equal({ foo: "foo" })
+    })
+  })
+
+  describe("nilOrEmpty", () => {
+    it("returns true for empty or nil objects", () => {
+      const truthyValues = ["", null, undefined, {}, []]
+      truthyValues.forEach(value => expect(nilOrEmpty(value)).to.equal(true))
+    })
+
+    it("returns false for non-empty or non-nil objects", () => {
+      const falseyValues = ["foo", 123, { foo: "bar" }, ["foo"], 0]
+      falseyValues.forEach(value => expect(nilOrEmpty(value)).to.equal(false))
     })
   })
 })
