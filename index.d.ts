@@ -1,4 +1,4 @@
-// Type definitions for functional-helpers v1.5.0
+// Type definitions for functional-helpers v1.6.0
 // Project: functional-helpers
 // Definitions by: Anton Strömkvist <http://ahst.ro>
 
