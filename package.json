@@ -1,6 +1,6 @@
 {
   "name": "functional-helpers",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Pure functions for use with e.g. Ramda",
   "main": "dist/index.js",
   "repository": "https://github.com/aevy/functional-helpers",
