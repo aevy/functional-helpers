@@ -31,9 +31,10 @@ export const pickTree = R.curry(function _pickTree(tree, src) {
     if (srcNode === undefined || !treeNode) {
       continue;
     }
-    result[branch] = treeNode instanceof Object
-      ? _pickTree(treeNode, srcNode) // If Object, recurse
-      : srcNode; // If anything else, copy src value
+    result[branch] =
+      treeNode instanceof Object
+        ? _pickTree(treeNode, srcNode) // If Object, recurse
+        : srcNode; // If anything else, copy src value
   }
   return result;
 });
@@ -50,11 +51,12 @@ export const evolveAll = R.curry(function _evolveAll(transformations, object) {
   for (key in transformations) {
     transformation = transformations[key];
     type = typeof transformation;
-    result[key] = type === "function"
-      ? transformation(object[key])
-      : transformation && type === "object"
-        ? _evolveAll(transformation, object[key])
-        : object[key];
+    result[key] =
+      type === "function"
+        ? transformation(object[key])
+        : transformation && type === "object"
+          ? _evolveAll(transformation, object[key])
+          : object[key];
   }
   return R.merge(object, result);
 });
