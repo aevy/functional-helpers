@@ -29,3 +29,4 @@ export function spread(x: keyof typeof y, y: Object): Object;
 export function spread(x: string): (y: Object) => Object;
 export function flattenProp(x: keyof typeof y, y: Object): Object;
 export function flattenProp(x: string): (y: Object) => Object;
+export function nil(): null;

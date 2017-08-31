@@ -68,3 +68,5 @@ export const spread = R.converge(R.merge, [R.dissoc, R.propOr({})]);
 export const flattenProp = spread;
 
 export const nilOrEmpty = R.either(R.isNil, R.isEmpty);
+
+export const nil = R.always(null);

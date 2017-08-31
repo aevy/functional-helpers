@@ -9,7 +9,8 @@ const {
   pickDeep,
   pickTree,
   mergeBy,
-  spread
+  spread,
+  nil
 } = require("./");
 
 describe("functional helpers", () => {
@@ -278,6 +279,14 @@ describe("functional helpers", () => {
     it("returns false for non-empty or non-nil objects", () => {
       const falseyValues = ["foo", 123, { foo: "bar" }, ["foo"], 0];
       falseyValues.forEach(value => expect(nilOrEmpty(value)).to.equal(false));
+    });
+  });
+
+  describe("nil", () => {
+    it("always returns null", () => {
+      expect(nil()).to.equal(null);
+      expect(nil(1)).to.equal(null);
+      expect(nil("foo")).to.equal(null);
     });
   });
 });
